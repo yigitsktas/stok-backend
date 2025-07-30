@@ -4,14 +4,13 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
-const PORT = process.env.PORT || 5050;
+const PORT = process.env.PORT;
 
 app.use(cors({
-  origin: 'https://stok-frontend.vercel.app', 
+  origin: '*', 
   methods: ['GET', 'POST', 'DELETE'],
   allowedHeaders: ['Content-Type']
 }));
-
 
 app.use(bodyParser.json());
 
