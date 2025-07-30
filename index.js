@@ -37,7 +37,6 @@ app.delete('/api/products/:id', (req, res) => {
   res.status(204).end();
 });
 
-// Fake login
 app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
   if (username === 'admin' && password === '1234') {
