@@ -4,10 +4,10 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5050;
 
 app.use(cors({
-  origin: '*', 
+  origin: '*',
   methods: ['GET', 'POST', 'DELETE'],
   allowedHeaders: ['Content-Type']
 }));
@@ -15,14 +15,14 @@ app.use(cors({
 app.use(bodyParser.json());
 
 const DATA_FILE = path.join(__dirname, 'data', 'products.json');
-// GET all products
+
+// Routes
 app.get('/api/products', (req, res) => {
   if (!fs.existsSync(DATA_FILE)) return res.json([]);
   const data = fs.readFileSync(DATA_FILE);
   res.json(JSON.parse(data));
 });
 
-// POST new product
 app.post('/api/products', (req, res) => {
   const products = fs.existsSync(DATA_FILE) ? JSON.parse(fs.readFileSync(DATA_FILE)) : [];
   const newProduct = { id: Date.now(), ...req.body };
@@ -31,7 +31,6 @@ app.post('/api/products', (req, res) => {
   res.status(201).json(newProduct);
 });
 
-// DELETE product
 app.delete('/api/products/:id', (req, res) => {
   if (!fs.existsSync(DATA_FILE)) return res.status(204).end();
   let products = JSON.parse(fs.readFileSync(DATA_FILE));
