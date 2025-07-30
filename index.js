@@ -1,21 +1,21 @@
 const express = require('express');
 const cors = require('cors');
-app.use(cors({
-  origin: 'https://stok-frontend.vercel.app', 
-  methods: ['GET', 'POST', 'DELETE'],
-  allowedHeaders: ['Content-Type']
-}));
 const fs = require('fs');
 const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 5050;
 
-const DATA_FILE = path.join(__dirname, 'data', 'products.json');
+app.use(cors({
+  origin: 'https://stok-frontend.vercel.app', 
+  methods: ['GET', 'POST', 'DELETE'],
+  allowedHeaders: ['Content-Type']
+}));
 
 
 app.use(bodyParser.json());
 
+const DATA_FILE = path.join(__dirname, 'data', 'products.json');
 // GET all products
 app.get('/api/products', (req, res) => {
   if (!fs.existsSync(DATA_FILE)) return res.json([]);
