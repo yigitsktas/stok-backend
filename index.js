@@ -3,13 +3,16 @@ const cors = require('cors');
 const fs = require('fs');
 const bodyParser = require('body-parser');
 const path = require('path');
-
 const app = express();
 const PORT = process.env.PORT || 5050;
 
 const DATA_FILE = path.join(__dirname, 'data', 'products.json');
 
-app.use(cors());
+app.use(cors({
+  origin: '*', 
+  methods: ['GET', 'POST', 'DELETE'],
+  allowedHeaders: ['Content-Type']
+}));
 app.use(bodyParser.json());
 
 // GET all products
